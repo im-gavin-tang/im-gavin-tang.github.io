@@ -1,0 +1,370 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>数组（Array） - Gavin Tang`s blog</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://gavintang.me/media/css/tailwind.css">
+<link rel="stylesheet" href="https://gavintang.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="数组（Array） - Gavin Tang`s blog - Atom Feed" href="https://gavintang.me/atom.xml">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileImage" content="/images/mstile-150x150.png">
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7CZ5GPHY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-DF7CZ5GPHY');
+  </script>
+    
+
+  <meta name="description" content="什么是数组
+数组（Array）在逻辑上是一种线性表数据结构，在物理上是顺序存储结构，它用一组「连续的内存空间」存储一组具有「类型相同」的数据；正因为这两个约束使得数组具备随机访问的特性，但同时要想在数组中插入或删除数据，为了保证连续性，就需..." />
+  <meta property="og:title" content="数组（Array） - Gavin Tang`s blog">
+  <meta property="og:description" content="什么是数组
+数组（Array）在逻辑上是一种线性表数据结构，在物理上是顺序存储结构，它用一组「连续的内存空间」存储一组具有「类型相同」的数据；正因为这两个约束使得数组具备随机访问的特性，但同时要想在数组中插入或删除数据，为了保证连续性，就需..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://gavintang.me/array/" />
+  <meta property="og:image" content="https://gavintang.me/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="数组（Array） - Gavin Tang`s blog">
+  <meta name="twitter:description" content="什么是数组
+数组（Array）在逻辑上是一种线性表数据结构，在物理上是顺序存储结构，它用一组「连续的内存空间」存储一组具有「类型相同」的数据；正因为这两个约束使得数组具备随机访问的特性，但同时要想在数组中插入或删除数据，为了保证连续性，就需...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://gavintang.me/array/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="https://gavintang.me/media/css/prism-atom-dark.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://gavintang.me" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Gavin Tang`s blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          数组（Array）
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2018-10-10 · 6 min read</div>
+          
+            <a href="https://gavintang.me/tag/GU4uZdQGs/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              数据结构与算法
+            </a>
+          
+            <a href="https://gavintang.me/tag/ATsLvLh1i/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              学习笔记
+            </a>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h3 id="什么是数组">什么是数组</h3>
+<p>数组（Array）在逻辑上是一种线性表数据结构，在物理上是顺序存储结构，它用一组「连续的内存空间」存储一组具有「类型相同」的数据；正因为这两个约束使得数组具备随机访问的特性，但同时要想在数组中插入或删除数据，为了保证连续性，就需要做大量的数据搬移工作。</p>
+<!-- more -->
+<h3 id="线性表">线性表</h3>
+<p>提到线性表（Linear List），除了数组，链表、队列以及栈等也是线性表数据结构，线性表就是数据排成像一条线一样的数据结构，每个线性表上除首尾节点外最多只有一个前驱节点和后继节点，具有「一对一」的关系，存储上分为顺序存储结构和链式存储结构。</p>
+<figure data-type="image" tabindex="1"><img src="https://gavintang.me/post-images/1611481007613.jpg" alt="linear" loading="lazy"></figure>
+<p>与线性表相反的概念是非线性表，如树结构和图结构等，之所以非线性，是因为在非线性表中的数据之间并不是前后的关系，即非「一对一」的关系。</p>
+<figure data-type="image" tabindex="2"><img src="https://gavintang.me/post-images/1611481053817.jpg" alt="nolinear" loading="lazy"></figure>
+<h3 id="随机访问">随机访问</h3>
+<p>数组通过下标随机访问数组内元素，例如一个长度为 10 的 数组 int32 a[10] = {0}，计算机给数组 a[10] 分配了一块连续内存空间 1000～1039，这里内存块的首地址 base_address = 1000，计算机会给每个内存单元分配一个地址，计算机通过地址来访问内存中的数据，当计算机需要随机访问数组中某个元素时，通过以下寻址公式计算：</p>
+<pre><code class="language-c">a[i]_address = base_address + i * type_size // type_size 为数组的每个元素的大小(int32为4字节)
+</code></pre>
+<h4 id="为何下标从0开始">为何下标从0开始</h4>
+<p>从数组存储的内存模型上来看，「下标」最确切的定义应该是「偏移（offset）」。如果用 a 表示数组的首地址，a[0] 就是偏移为 0 的位置，也就是首地址，a[k] 就表示偏移 k 个 type_size 的位置，所以计算 a[k] 的内存地址公式为：</p>
+<pre><code>a[k]_address = base_address + k * type_size
+</code></pre>
+<p>如果数组从 1 开始计数，数组元素 a[k] 的内存地址公式为：</p>
+<pre><code>a[k]_address = base_address + (k-1) * type_size
+</code></pre>
+<p>对比两个公式，从 1 开始编号，每次随机访问数组元素都多了一次减法运算，对于 CPU 来说，就多了一次减法指令。数组作为非常基础的数据结构，通过下标随机访问数组元素又是其非常基础的编程操作，效率的优化就要尽可能做到极致。所以为了减少一次减法操作，数组选择了从 0 开始编号，而不是从 1 开始。</p>
+<h4 id="数组越界访问">数组越界访问</h4>
+<p>数组越界在 C 语言中是一种未决行为，并没有规定数组访问越界时编译器应该如何处理。因为，访问数组的本质就是访问一段连续内存，只要数组通过偏移计算得到的内存地址是可用的，那么程序就可能不会报任何错误。</p>
+<h3 id="插入与删除">插入与删除</h3>
+<p>前面概念中提到，数组为了保持内存数据的连续性，会导致插入或删除需要做大量的数据搬移工作，因此变得比较低效。</p>
+<p>假设数组的长度为 n，如果需要将一个数据插入到数组中的第 k 个位置，为了把第 k 个位置腾出来给新来的数据，需要将第 k～n 这部分元素都顺序地往后挪一位。如果在数组的末尾插入元素，那就不需要移动数据了，这时的时间复杂度为 O(1)。但如果在数组的开头插入元素，那所有的数据都需要依次往后移动一位，所以最坏时间复杂度是 O(n)。 因为在每个位置插入元素的概率是一样的，所以平均情况时间复杂度为 (1+2+...n)/n=O(n)。</p>
+<p>如果数组中的数据是有序的，在某个位置插入一个新的元素时，就必须按照刚才的方法搬移 k 之后的数据。但是，如果数组中存储的数据并没有任何规律，数组只是被当作一个存储数据的集合。在这种情况下，如果要将某个数据插入到第 k 个位置，为了避免大规模的数据搬移，可以直接将第 k 位的数据搬移到数组元素的最后，把新的元素直接放入第 k 个位置。</p>
+<p>利用这种处理技巧，在特定场景下，在第 k 个位置插入一个元素的时间复杂度就会降为 O(1)，这种处理思想在快排中也会用到。</p>
+<p>删除也类似，可以采用标记法，当空间不足时触发一次性删除操作。</p>
+<h3 id="数组与链表区别">数组与链表区别</h3>
+<ul>
+<li>数组用一段连续的内存空间存储一组类型相同的数据并支持随机访问，根据下标随机访问的时间复杂度为 O(1)，插入和删除操作需搬运大量数据。</li>
+<li>而链表则相反，内存空间不连续且不支持随机访问，链表的插入和删除操作无需搬运数据，时间复杂度 O(1)。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>数组是最基础、最简单的数据结构了，数组用一块连续的内存空间，来存储相同类型的一组数据，最大的特点就是支持随机访问，但插入、删除操作也因此变得比较低效，平均情况时间复杂度为 O(n)。但如果是底层开发，使用数组可能会比高级语言提供的容器类更合适。</p>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  ©2018-2021 Gavin Tang
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E7%BB%84">什么是数组</a></li>
+<li><a href="#%E7%BA%BF%E6%80%A7%E8%A1%A8">线性表</a></li>
+<li><a href="#%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE">随机访问</a>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BD%95%E4%B8%8B%E6%A0%87%E4%BB%8E0%E5%BC%80%E5%A7%8B">为何下标从0开始</a></li>
+<li><a href="#%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E8%AE%BF%E9%97%AE">数组越界访问</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8F%92%E5%85%A5%E4%B8%8E%E5%88%A0%E9%99%A4">插入与删除</a></li>
+<li><a href="#%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8%E5%8C%BA%E5%88%AB">数组与链表区别</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://gavintang.me/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://gavintang.me/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'wb8jfG6Tqm1YYW8l1b2PDmtc-MdYXbMMI',
+    appKey: 'P0Btm0UbLzC7DgOX5OS6omLn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'robohash',
+    verify: true,
+    placeholder: '',
+    lang: 'en',
+    visitor: false,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+
+  
+  
+</body>
+
+</html>

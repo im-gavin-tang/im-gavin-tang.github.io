@@ -1,0 +1,413 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>算法复杂度分析 - Gavin Tang`s blog</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://gavintang.me/media/css/tailwind.css">
+<link rel="stylesheet" href="https://gavintang.me/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="算法复杂度分析 - Gavin Tang`s blog - Atom Feed" href="https://gavintang.me/atom.xml">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileImage" content="/images/mstile-150x150.png">
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF7CZ5GPHY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-DF7CZ5GPHY');
+  </script>
+    
+
+  <meta name="description" content="为什么需要复杂度分析？
+通过统计、监控，就能得到算法执行时间和占用的内存大小，但测试结果非常依赖测试环境，测试结果受数据规模与有序度的影响较大；所以需要一个不用具体的测试数据来测试，就可以粗略地估计算法的执行效率的方法，这就是算法复杂度分析..." />
+  <meta property="og:title" content="算法复杂度分析 - Gavin Tang`s blog">
+  <meta property="og:description" content="为什么需要复杂度分析？
+通过统计、监控，就能得到算法执行时间和占用的内存大小，但测试结果非常依赖测试环境，测试结果受数据规模与有序度的影响较大；所以需要一个不用具体的测试数据来测试，就可以粗略地估计算法的执行效率的方法，这就是算法复杂度分析..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://gavintang.me/algorithm-complexity/" />
+  <meta property="og:image" content="https://gavintang.me/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="算法复杂度分析 - Gavin Tang`s blog">
+  <meta name="twitter:description" content="为什么需要复杂度分析？
+通过统计、监控，就能得到算法执行时间和占用的内存大小，但测试结果非常依赖测试环境，测试结果受数据规模与有序度的影响较大；所以需要一个不用具体的测试数据来测试，就可以粗略地估计算法的执行效率的方法，这就是算法复杂度分析...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://gavintang.me/algorithm-complexity/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="https://gavintang.me/media/css/prism-atom-dark.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://gavintang.me" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Gavin Tang`s blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          算法复杂度分析
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2018-10-05 · 7 min read</div>
+          
+            <a href="https://gavintang.me/tag/GU4uZdQGs/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              数据结构与算法
+            </a>
+          
+            <a href="https://gavintang.me/tag/ATsLvLh1i/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              学习笔记
+            </a>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h3 id="为什么需要复杂度分析">为什么需要复杂度分析？</h3>
+<p>通过统计、监控，就能得到算法执行时间和占用的内存大小，但测试结果非常依赖测试环境，测试结果受数据规模与有序度的影响较大；所以需要一个不用具体的测试数据来测试，就可以粗略地估计算法的执行效率的方法，这就是算法复杂度分析。</p>
+<!-- more -->
+<h3 id="算法复杂度">算法复杂度</h3>
+<p>一个算法有多好、多快，怎么衡量一个算法的好坏？计算机科学在算法分析过程中提出了算法复杂度理论，这套理论可以量化算法的效率，以此作为标准来衡量到底选择哪一种算法；复杂度有两个维度，分别为时间和空间。</p>
+<p>一个实现了某算法的程序：</p>
+<ul>
+<li>如果计算的速度越快，那么这个算法时间复杂度越低。</li>
+<li>如果占用的计算资源越少，那么空间复杂度越低。</li>
+<li>要选择复杂度低的算法，衡量好空间和时间的消耗，选出适合特定场景的算法。<br>
+这两个复杂度维度的量化过程都是一样的，所以后面只分析时间复杂度。</li>
+</ul>
+<p>算法执行时间用 T(n) 表示，如每行代码执行总次数用 f(n) 表示，使得当 n 趋近于无穷大时，T(n) / f(n) 的极限值为不等于零的常数，则称 f(n) 是 T(n) 的同数量级函数，记作 T(n) = O(f(n))；O表示代码的执行时间 T(n) 与 f(n) 表达式成正比，表达代码的执行时间随数据规模增长的变化趋势，所以也称 O(f(n)) 为算法的渐进时间复杂度，简称时间复杂度。</p>
+<h3 id="渐进符号">渐进符号</h3>
+<p>如何量化复杂度，到底有多复杂？计算机科学其实抽象出了几个复杂度渐进符号：O(Omicron)、ο(omicron)、Θ(Theta)、Ω(Omega) 以及 ω(omega)；下面着重介绍一下 O(Omicron)，我们习惯读作大O。</p>
+<p>假设算法的运行时间表达式为 T(n)= 3 * n^2 + 4 * n^3，如果问题规模 n 足够大，那么低次方的项将无足轻重，运行时间主要取决于高次方项 4 * n^3，随着 n 的增大，4 * n^3 中的常数项 4 也变得不重要了，所以算法的运行时间 T(n) 约等于 n^3，记为 T(n) = O(n^3)。</p>
+<p>例如 f(n) = 2n^2 + 1，则时间复杂度 T(n) = O(2n^2+1)，通常会忽略「低阶、常量、系数」，因为当 n 很大时并不影响增长趋势，最终写成 T(n) = O(n^2)。</p>
+<p>大O 的数学含义：<br>
+设 f(n) 和 g(n) 是定义域 n 为自然数集合的函数， f(n) 函数的阶不高于 g(n) 函数的阶；也可以说，存在正常量 c 和 n0，对于所有 n &gt;= n0，有 0 &lt;= f(n) &lt;= c * g(n)，那么可以记为 f(n) = O(g(n))，g(n) 是 f(n) 的渐进上界。</p>
+<p>下图展示了几种符号的函数形式：</p>
+<figure data-type="image" tabindex="1"><img src="https://gavintang.me/post-images/1609314368128.jpg" alt="complexity" loading="lazy"></figure>
+<p>当 n 为某个值时：</p>
+<ul>
+<li>如果 f(n) 被 g(n) 两条线夹在中间，那么 g(n) 就是渐进紧确界。</li>
+<li>如果 g(n) 的线在上面，就是渐进上界。</li>
+<li>如果 g(n) 线在下面，就是渐进下界。</li>
+</ul>
+<p>我们一般会评估一个算法的渐进上界O，因为这表示算法的最坏情况。</p>
+<h3 id="时间复杂度分析技巧">时间复杂度分析技巧</h3>
+<ul>
+<li>只关注循环执行次数最多的一段代码。</li>
+<li>加法法则，总复杂度等于量级最大的那段代码的复杂度。</li>
+<li>乘法法则，嵌套代码的复杂度等于嵌套内外代码复杂度的乘积。</li>
+</ul>
+<h3 id="最好-最坏与平均复杂度">最好、最坏与平均复杂度</h3>
+<ul>
+<li>最好时间复杂度是指在最理想的情况下执行代码的时间复杂度。</li>
+<li>最坏时间复杂度是指在最糟糕的情况下执行代码的时间复杂度。</li>
+<li>平均时间复杂度可以通过计算加权平均值（也叫期望值）得出，所以平均时间复杂度也叫加权平均时间复杂度或期望时间复杂度。</li>
+</ul>
+<h3 id="均摊时间复杂度">均摊时间复杂度</h3>
+<p>通过摊还分析法（或者叫平摊分析）来分析均摊时间复杂度，其实可以认为一种特殊的平均时间复杂度。<br>
+在多数情况下使用一个复杂度表示即可（比如最坏时间复杂度），只有在同一块代码的不同情况下，时间复杂度有量级的差距，才会使用最好、最坏、平均三种复杂度表示法来区分，而均摊复杂度应用的场景更加有限。</p>
+<p>另外，平均时间复杂度对不同操作出现的概率不同进行加权平均，不强调操作的次序问题；而均摊时间复杂度针对操作的某个次序来求得总的时间复杂度，再均摊到各个操作步骤。故平均时间复杂度没有涉及到操作次序，而均摊时间复杂度涉及到，所以在一些合适的场景下，均摊时间复杂度对数据结构操作复杂度的估计具有更加的真实性。</p>
+<h3 id="案例分析">案例分析</h3>
+<pre><code class="language-c">// 全局变量，大小为 10 的数组 array，长度 len，下标 i。
+int array[] = new int[10]; 
+int len = 10;
+int i = 0;
+
+// 往数组中添加一个元素
+void add(int element) {
+   if (i &gt;= len) { // 数组空间不够了
+     // 重新申请一个 2 倍大小的数组空间
+     int new_array[] = new int[len*2];
+     // 把原来 array 数组中的数据依次 copy 到 new_array
+     for (int j = 0; j &lt; len; ++j) {
+       new_array[j] = array[j];
+     }
+     // new_array 复制给 array，array 现在大小就是 2 倍 len 了
+     array = new_array;
+     len = 2 * len;
+   }
+   // 将 element 放到下标为 i 的位置，下标 i 加一
+   array[i] = element;
+   ++i;
+}
+</code></pre>
+<p>当 i &lt; len 时，即 i = 0, 1, 2, ..., n-1 的时候，for循环不执行，所以 n 次的时间复杂度都是 O(1)；<br>
+当 i &gt;= len时，即 i = n 的时候，for循环进行数组的copy，所以只有这1次的时间复杂度是 O(n)；<br>
+由此可知：</p>
+<ul>
+<li>该算法的最好情况时间复杂度为 O(1)；</li>
+<li>最坏情况时间复杂度为 O(n)；</li>
+<li>平均情况时间复杂度：
+<ul>
+<li>第一种计算方式为 (1+1+...+1+n)/(n+1) = 2n/(n+1)，所以平均复杂度为 O(1)；</li>
+<li>第二种计算方式（加权平均法又称期望），1*(1/n+1)+1*(1/n+1)+...+1*(1/n+1)+n*(1/(n+1))=1，所以加权平均时间复杂度为 O(1)；</li>
+<li>第三种计算方式（均摊时间复杂度），前 n 个操作复杂度都是 O(1)，第 n+1 次操作的复杂度是 O(n)，所以把最后一次的复杂度分摊到前 n 次上，那么均摊下来每次操作的复杂度为 O(1)。</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  ©2018-2021 Gavin Tang
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90">为什么需要复杂度分析？</a></li>
+<li><a href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6">算法复杂度</a></li>
+<li><a href="#%E6%B8%90%E8%BF%9B%E7%AC%A6%E5%8F%B7">渐进符号</a></li>
+<li><a href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90%E6%8A%80%E5%B7%A7">时间复杂度分析技巧</a></li>
+<li><a href="#%E6%9C%80%E5%A5%BD-%E6%9C%80%E5%9D%8F%E4%B8%8E%E5%B9%B3%E5%9D%87%E5%A4%8D%E6%9D%82%E5%BA%A6">最好、最坏与平均复杂度</a></li>
+<li><a href="#%E5%9D%87%E6%91%8A%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">均摊时间复杂度</a></li>
+<li><a href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90">案例分析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://gavintang.me/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://gavintang.me/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'wb8jfG6Tqm1YYW8l1b2PDmtc-MdYXbMMI',
+    appKey: 'P0Btm0UbLzC7DgOX5OS6omLn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'robohash',
+    verify: true,
+    placeholder: '',
+    lang: 'en',
+    visitor: false,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+
+  
+  
+</body>
+
+</html>
