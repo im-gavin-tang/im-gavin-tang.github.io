@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gavintang.me</id>
     <title>Gavin Tang`s blog</title>
-    <updated>2021-04-02T05:20:28.138Z</updated>
+    <updated>2021-04-02T05:21:15.615Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gavintang.me"/>
     <link rel="self" href="https://gavintang.me/atom.xml"/>
@@ -16,8 +16,12 @@
         <link href="https://gavintang.me/recursion/">
         </link>
         <updated>2018-10-31T03:14:37.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="什么是递归">什么是递归</h3>
+<p>递归（Recursion）是一种解决问题的方法或编程技巧，将问题分解为更小的子问题，直到得到一个足够小的问题可以被简单的解决；通常递归涉及函数的自身调用，递归允许我们编写优雅的解决方案，解决可能很难编程的问题。</p>
+]]></summary>
         <content type="html"><![CDATA[<h3 id="什么是递归">什么是递归</h3>
 <p>递归（Recursion）是一种解决问题的方法或编程技巧，将问题分解为更小的子问题，直到得到一个足够小的问题可以被简单的解决；通常递归涉及函数的自身调用，递归允许我们编写优雅的解决方案，解决可能很难编程的问题。</p>
+<!-- more -->
 <h3 id="递归的三定律">递归的三定律</h3>
 <ul>
 <li><strong>可分解成子问题</strong> 递归的逻辑是能够将问题分解成数据规模更小和更容易的问题来解决的优雅表达，子问题就是数据规模更小的问题。比如「前n项有序数列求和」的问题，可以分解为求解「前n-1项有序数列求和」这样一个子问题。</li>
