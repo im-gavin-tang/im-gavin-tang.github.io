@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://gavintang.me</id>
     <title>Gavin Tang`s blog</title>
-    <updated>2021-04-02T05:21:15.615Z</updated>
+    <updated>2021-04-02T05:23:21.725Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://gavintang.me"/>
     <link rel="self" href="https://gavintang.me/atom.xml"/>
@@ -30,14 +30,8 @@
 </ul>
 <h3 id="递推公式">递推公式</h3>
 <p>写代码之前的关键是找到将大问题分解为小问题的规律，并基于此找到递推公式和终止条件，最终转化成递归代码。</p>
-<blockquote>
-<p>前n项有序数列求和递推公式</p>
-</blockquote>
-<pre><code>sum(n) = sum(n - 1) + n
-f(1) = 1
-</code></pre>
 <pre><code class="language-go">// 有序数列求和 1+2+3+4+...+100
-// 递归函数 sum(n) = sum(n-1) + n
+// 递推公式 sum(n) = sum(n - 1) + n
 // 终止条件 f(1) = 1
 func sum(n int) int {
     if n == 1 {
